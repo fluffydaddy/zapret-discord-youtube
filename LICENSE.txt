@@ -2,6 +2,7 @@ MIT License
 
 Copyright (c) 2016-2025 bol-van
 Copyright (c) 2024-2025 Flowseal
+Copyright (c) 2025 fluffydaddy
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -44,3 +45,5 @@ To comply with the licenses of these projects:
 2. The use of WinDivert in this project is governed by its licensing terms (LGPLv3/GPLv2).  
 3. This repository provides only binary files and does not include the source code of  
    the project by bol-van or modifications to WinDivert.  
+
+---

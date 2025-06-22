@@ -313,6 +313,9 @@ discordstatus.com
 dis.gd
 discord.co
 discord-attachments-uploads-prd.storage.googleapis.com
+frankerfacez.com
+ffzap.com
+betterttv.net
 7tv.app
 7tv.io
 10tv.app

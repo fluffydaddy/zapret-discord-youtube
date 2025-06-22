@@ -111,6 +111,13 @@ sso.amazonaws.com
 fastly.net
 fastly.com
 
+# Linode
+linodeusercontent.com
+panicartstudios.com
+bcdnx.com
+perfops.net
+globo.com
+
 # Games
 darkanddarker.com
 dnse5.com
@@ -135,8 +142,8 @@ battle.com
 battle.com.cn
 goblizzard.tw
 blizzdmz.net
-blizzard.com
-blizzard.net
+#blizzard.com
+#blizzard.net
 blizard.com
 blizzard.eu
 blizzard.at
@@ -251,10 +258,10 @@ origin.com
 get-origin.ru
 
 # Steam / Valve
-steamstatic.com
-steamcontent.com
-steampowered.com
-steamcommunity.com
+#steamstatic.com
+#steamcontent.com
+#steampowered.com
+#steamcommunity.com
 steamgames.com
 steamvr.com
 steamserver.net
@@ -269,6 +276,7 @@ bootswatch.com
 # CDN
 cdn77.com
 cdn77.net
+cdn77.org
 godaddy.com
 digitalocean.com
 signalcdn.com

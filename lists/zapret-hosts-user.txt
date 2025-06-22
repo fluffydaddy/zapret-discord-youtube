@@ -113,10 +113,13 @@ fastly.com
 
 # Linode
 linodeusercontent.com
+
+# Herosiege
 panicartstudios.com
-bcdnx.com
-perfops.net
-globo.com
+
+#bcdnx.com
+#perfops.net
+#globo.com
 
 # Games
 darkanddarker.com
@@ -129,26 +132,26 @@ fortnite.com
 warframe.com
 
 # Epic Games
-unrealengine.com
-epicgames.com
-epicgames.dev
-epicgames.net
-epicgames.org
-epicgamescdn.com
+#unrealengine.com
+#epicgames.com
+#epicgames.dev
+#epicgames.net
+#epicgames.org
+#epicgamescdn.com
 
 # Blizzard aka Battlenet / Activision aka Activision Blizzard
-battle.net
-battle.com
-battle.com.cn
-goblizzard.tw
-blizzdmz.net
+#battle.net
+#battle.com
+#battle.com.cn
+#goblizzard.tw
+#blizzdmz.net
 #blizzard.com
 #blizzard.net
-blizard.com
-blizzard.eu
-blizzard.at
-blizzard.jobs
-blizzard.kr
+#blizard.com
+#blizzard.eu
+#blizzard.at
+#blizzard.jobs
+#blizzard.kr
 blizzard.tw
 blizzcon.com
 blizzardi.com

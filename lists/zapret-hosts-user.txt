@@ -115,6 +115,7 @@ fastly.com
 linodeusercontent.com
 
 # Herosiege
+herosiege.com
 panicartstudios.com
 
 #bcdnx.com
@@ -130,6 +131,30 @@ twinmotion.com
 metahuman.com
 fortnite.com
 warframe.com
+eveonline.com
+
+# Minecraft Servers
+cubecraft.net
+inpvp.net
+galaxite.net
+lifeboat.games
+lbsg.net
+hivebedrock.eu
+hivebedrock.network
+enchanted.gg
+playhive.com
+
+geo.hivebedrock.network
+ca.hivebedrock.network
+fr.hivebedrock.network
+sg.hivebedrock.network
+
+play.inpvp.net
+mco.cubecraft.net
+mco.lbsg.net
+eu.lifeboat.games
+mco.lifeboat.games
+eu.play.galaxite.net
 
 # Epic Games
 #unrealengine.com

@@ -10,7 +10,7 @@ echo:
 set "BIN=%~dp0bin\"
 set "LISTS=%~dp0lists\"
 
-start "zapret: %~n0" /min "%BIN%winws.exe" --wf-tcp=80,443,1119,61000-62000,6695-6705,8000-8020,9000-9090 --wf-udp=0-65535 ^
+start "zapret: %~n0" /min "%BIN%winws.exe" --wf-tcp=80,443,1119,61000-62000,6695-6705,8000-8020 --wf-udp=0-65535 ^
 --comment Discord --filter-udp=50000-50100 --filter-l7=discord,stun --dpi-desync=fake --dpi-desync-repeats=6 --new ^
 --comment WARP --filter-tcp=443 --ipset-ip=162.159.36.1,162.159.46.1,2606:4700:4700::1111,2606:4700:4700::1001 --filter-l7=tls --dpi-desync=fake --dpi-desync-fake-tls="%BIN%tls_clienthello_www_google_com.bin" --dpi-desync-start=n2 --dpi-desync-cutoff=n3 --dpi-desync-fooling=badseq --new ^
 --comment UDP --filter-udp=443,3074-3480,4950-4955,4960-4965,4970-4975,4980-4985,4990-4995 --hostlist="%LISTS%zapret-hosts-user.txt" --hostlist="%LISTS%zapret-hosts.txt" --hostlist-exclude="%LISTS%zapret-hosts-user-exclude.txt" --hostlist="%LISTS%zapret-hosts-auto.txt" --dpi-desync=fake --dpi-desync-repeats=11 --dpi-desync-fake-quic="%BIN%quic_initial_www_google_com.bin" --new ^
@@ -23,5 +23,4 @@ start "zapret: %~n0" /min "%BIN%winws.exe" --wf-tcp=80,443,1119,61000-62000,6695
 --comment ElectonicArts --filter-tcp=443,61000-62000 --ipset="%LISTS%ipset-elecronicarts.txt" --dpi-desync=fake,multidisorder --dpi-desync-split-pos=1,midsld --dpi-desync-repeats=11 --dpi-desync-fooling=md5sig --new ^
 --comment BattleNet --filter-tcp=1119,61000-62000 --ipset="%LISTS%ipset-battlenet.txt" --dpi-desync=fake,multidisorder --dpi-desync-split-pos=1,midsld --dpi-desync-repeats=11 --dpi-desync-fooling=md5sig --new ^
 --comment Warframe --filter-tcp=443,6695-6705 --ipset="%LISTS%ipset-warframe.txt" --dpi-desync=fake,multidisorder --dpi-desync-split-pos=1,midsld --dpi-desync-repeats=11 --dpi-desync-fooling=md5sig --new ^
---comment Linode --filter-tcp=80,443,6600-6700,9000-9090 --ipset="%LISTS%ipset-linodeusercontent.txt" --dpi-desync=fake,multidisorder --dpi-desync-split-pos=1,midsld --dpi-desync-repeats=11 --dpi-desync-fooling=md5sig --new ^
---comment Linode --filter-udp=80,443,6600-6700,9000-9090 --ipset="%LISTS%ipset-linodeusercontent.txt" --dpi-desync=fake --dpi-desync-repeats=11 --dpi-desync-fake-quic="%BIN%quic_initial_www_google_com.bin"
+--comment Linode --filter-tcp=80,443,9000-9090 --ipset="%LISTS%ipset-linodeusercontent.txt" --dpi-desync=fake,split2 --dpi-desync-autottl=2 --dpi-desync-repeats=6 --dpi-desync-fake-tls="%BIN%tls_clienthello_www_google_com.bin"

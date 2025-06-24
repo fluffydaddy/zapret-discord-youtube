@@ -116,6 +116,10 @@ fastly.com
 digicert.com
 statsigapi.net
 
+# Deviant Art
+deviantart.net
+wixmp.com
+
 # Temporary
 #detectportal.firefox.com
 browser-intake-datadoghq.com
@@ -134,6 +138,24 @@ metahuman.com
 fortnite.com
 warframe.com
 eveonline.com
+
+# Riot
+valorant.secure.dyn.riotcdn.net
+playvalorant.com
+valorant.scd.riotcdn.net
+riotgames.com
+pvp.net
+riotcdn.net
+rgpub.io
+dradis-prod.rdatasrv.net
+riotcdn.com
+riotgames.es
+launcher.RiotClientServices.com
+launcher.LeagueofLegends.com
+seasonvar.ru
+valorant.secure.dyn.riotcdn.net
+lol.secure.dyn.riotcdn.net
+bacon.secure.dyn.riotcdn.net
 
 # Minecraft Servers
 cubecraft.net

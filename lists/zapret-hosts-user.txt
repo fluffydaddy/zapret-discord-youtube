@@ -11,6 +11,7 @@ cloudflare-quic.com
 cloudflare.com
 cloudflare.net
 cloudflare.tv
+cloudflarecp.com
 cloudflareaccess.com
 cloudflareapps.com
 cloudflarebolt.com
@@ -68,6 +69,7 @@ akagtm.org
 akadns.net
 akamaized-services.net
 akamaitechnologies.com
+llnwd.net
 edgesuite.net
 edgesuite-cdn.net
 edgecastcdn.net
@@ -111,12 +113,12 @@ sso.amazonaws.com
 fastly.net
 fastly.com
 
-# Linode
-linodeusercontent.com
+digicert.com
+statsigapi.net
 
-# Herosiege
-herosiege.com
-panicartstudios.com
+# Temporary
+#detectportal.firefox.com
+browser-intake-datadoghq.com
 
 #bcdnx.com
 #perfops.net
@@ -159,7 +161,7 @@ eu.play.galaxite.net
 # Epic Games
 #unrealengine.com
 #epicgames.com
-#epicgames.dev
+epicgames.dev
 #epicgames.net
 #epicgames.org
 #epicgamescdn.com
@@ -274,27 +276,27 @@ demonware.net
 demonware.cn
 
 # Ubisoft aka Uplay
-uplay.com
+#uplay.com
 ubi.com
-ubisoft.com
-ubisoftconnect.com
-ubisoftclub.com
+#ubisoft.com
+#ubisoftconnect.com
+#ubisoftclub.com
 
 # Origin / EA
-ea.com
-origin.com
-get-origin.ru
+#ea.com
+#origin.com
+#get-origin.ru
 
 # Steam / Valve
 #steamstatic.com
 #steamcontent.com
 #steampowered.com
 #steamcommunity.com
-steamgames.com
-steamvr.com
+#steamgames.com
+#steamvr.com
 steamserver.net
-steam-chat.com
-valvesoftware.com
+#steam-chat.com
+#valvesoftware.com
 
 # Bootstrap
 getbootstrap.com
@@ -302,9 +304,13 @@ bootstrapcdn.com
 bootswatch.com
 
 # CDN
+alikunlun.com
+bplslb.com
 cdn77.com
 cdn77.net
 cdn77.org
+cdn84.com
+cdn28.com
 godaddy.com
 digitalocean.com
 signalcdn.com
@@ -1399,7 +1405,6 @@ dl.google.com
 google-analytics.com
 googletagservices.com
 googletagmanager.com
-googletagservices.com
 tagmanager.google.com
 
 fonts.gstatic.com
@@ -1493,4 +1498,6 @@ mmoui.com
 www.mmoui.com
 minion.mmoui.com
 cdn.mmoui.com
+
 pki.goog
+optimizely.com

@@ -1,0 +1,3 @@
+maven.neoforged.net
+maven.fabricmc.net
+maven.minecraftforge.net

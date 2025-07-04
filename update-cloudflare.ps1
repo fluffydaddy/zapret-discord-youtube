@@ -2,7 +2,7 @@
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 
 # Path to save the IP list
-$listPath = Join-Path -Path $PSScriptRoot -ChildPath "lists\ipset-cloudflare.txt"
+$listPath = Join-Path -Path $PSScriptRoot -ChildPath "lists\custom\ipset-cloudflare.txt"
 
 # URL to fetch the raw IP list
 $url = "https://raw.githubusercontent.com/V3nilla/IPSets-For-Bypass-in-Russia/refs/heads/main/ipset-cloudflare.txt"

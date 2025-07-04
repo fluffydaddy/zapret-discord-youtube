@@ -1,0 +1,16 @@
+valorant.secure.dyn.riotcdn.net
+playvalorant.com
+valorant.scd.riotcdn.net
+riotgames.com
+pvp.net
+riotcdn.net
+rgpub.io
+dradis-prod.rdatasrv.net
+riotcdn.com
+riotgames.es
+launcher.RiotClientServices.com
+launcher.LeagueofLegends.com
+seasonvar.ru
+valorant.secure.dyn.riotcdn.net
+lol.secure.dyn.riotcdn.net
+bacon.secure.dyn.riotcdn.net

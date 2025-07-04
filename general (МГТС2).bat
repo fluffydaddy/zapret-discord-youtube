@@ -1,40 +1,101 @@
 @echo off
+setlocal EnableDelayedExpansion
 chcp 65001 > nul
 :: 65001 - UTF-8
+
+:: External commands
+if "%~1"=="install" (
+	rem %2 - service name
+	rem %3 - service start
+	call :install %2 %3
+	exit /b
+) else (
+	call :main
+	exit /b
+)
+
+:configure
+
+set BIN=%~dp0bin\
+set LISTS=%~dp0lists\
+
+set ZAPRET_CUSTOM=%LISTS%custom\
+
+set ZAPRET_IPSET=%LISTS%zapret-ipset.txt
+set ZAPRET_IPSET_USER=%LISTS%zapret-ipset-user.txt
+
+set ZAPRET_HOSTS=%LISTS%zapret-hosts.txt
+set ZAPRET_HOSTS_USER=%LISTS%zapret-hosts-user.txt
+set ZAPRET_HOSTS_AUTO=%LISTS%zapret-hosts-auto.txt
+set ZAPRET_HOSTS_EXCLUDE=%LISTS%zapret-hosts-exclude.txt
+
+set FAKE_QUIC=%BIN%quic_initial_vk_com.bin
+set FAKE_UDP=%BIN%quic_initial_vk_com.bin
+set FAKE_HTTP=%BIN%http_iana_org.bin
+set FAKE_TLS=%BIN%tls_clienthello_vk_com.bin
+
+set DISCORD_STRATEGY=--dpi-desync=fake --dpi-desync-autottl=2 --dpi-desync-repeats=6
+set QUIC_STRATEGY=--dpi-desync=fake --dpi-desync-autottl=2 --dpi-desync-repeats=6 --dpi-desync-fake-quic="%FAKE_QUIC%"
+set UDP_STRATEGY=--dpi-desync=fake --dpi-desync-autottl=2 --dpi-desync-repeats=12 --dpi-desync-any-protocol=1 --dpi-desync-fake-unknown-udp="%FAKE_UDP%" --dpi-desync-cutoff=n3
+set HTTP_STRATEGY=--dpi-desync=fake,multisplit --dpi-desync-autottl=2 --dpi-desync-fooling=md5sig --dpi-desync-fake-http="%FAKE_HTTP%"
+set HTTPS_STRATEGY=--dpi-desync=fake --dpi-desync-repeats=6 --dpi-desync-fooling=md5sig --dpi-desync-fake-tls="%FAKE_TLS%"
+
+set ARGUMENTS=--wf-tcp=80,443,1024-65535 --wf-udp=443,50000-50100,1024-65535
+
+set ARGUMENTS=!ARGUMENTS! --filter-udp=50000-50100 --filter-l7=discord,stun %DISCORD_STRATEGY% --new
+set ARGUMENTS=!ARGUMENTS! --filter-tcp=443 --filter-l7=tls --ipset-ip=162.159.36.1,162.159.46.1,2606:4700:4700::1111,2606:4700:4700::1001 %HTTPS_STRATEGY% --new
+
+set ARGUMENTS=!ARGUMENTS! --filter-udp=443 --hostlist-exclude="%ZAPRET_HOSTS_EXCLUDE%" --hostlist="%ZAPRET_HOSTS_USER%" --hostlist="%ZAPRET_HOSTS%" --hostlist="%ZAPRET_HOSTS_AUTO%" %QUIC_STRATEGY% --new
+set ARGUMENTS=!ARGUMENTS! --filter-tcp=80 --hostlist-exclude="%ZAPRET_HOSTS_EXCLUDE%" --hostlist="%ZAPRET_HOSTS_USER%" --hostlist="%ZAPRET_HOSTS%" --hostlist-auto="%ZAPRET_HOSTS_AUTO%" %HTTP_STRATEGY% --new
+set ARGUMENTS=!ARGUMENTS! --filter-tcp=443,1024-65535 --hostlist-exclude="%ZAPRET_HOSTS_EXCLUDE%" --hostlist="%ZAPRET_HOSTS_USER%" --hostlist="%ZAPRET_HOSTS%" --hostlist-auto="%ZAPRET_HOSTS_AUTO%" %HTTPS_STRATEGY% --new
+set ARGUMENTS=!ARGUMENTS! --filter-udp=1024-65535 --hostlist-exclude="%ZAPRET_HOSTS_EXCLUDE%" --hostlist="%ZAPRET_HOSTS_USER%" --hostlist="%ZAPRET_HOSTS%" --hostlist="%ZAPRET_HOSTS_AUTO%" %UDP_STRATEGY% --new
+
+set ARGUMENTS=!ARGUMENTS! --filter-udp=443 --ipset="%ZAPRET_IPSET_USER%" --ipset="%ZAPRET_IPSET%" %QUIC_STRATEGY% --new
+set ARGUMENTS=!ARGUMENTS! --filter-tcp=80 --ipset="%ZAPRET_IPSET_USER%" --ipset="%ZAPRET_IPSET%" %HTTP_STRATEGY% --new
+set ARGUMENTS=!ARGUMENTS! --filter-tcp=443,1024-65535 --ipset="%ZAPRET_IPSET_USER%" --ipset="%ZAPRET_IPSET%" %HTTPS_STRATEGY% --new
+set ARGUMENTS=!ARGUMENTS! --filter-udp=1024-65535 --ipset="%ZAPRET_IPSET_USER%" --ipset="%ZAPRET_IPSET%" %UDP_STRATEGY%
+
+goto :eof
+
+:combine
+
+call "%~dp0combine.bat" "%ZAPRET_CUSTOM%" "%ZAPRET_IPSET%" "%ZAPRET_HOSTS%"
+
+goto :eof
+
+:main
 
 cd /d "%~dp0"
 call service.bat status_zapret
 call service.bat check_updates
 echo:
 
-set "BIN=%~dp0bin\"
-set "LISTS=%~dp0lists\"
+call :configure
+call :combine
 
-rem 9000-9090,6600-6610,14815-14816
+start "zapret: %~n0" /min "%BIN%winws.exe" %ARGUMENTS%
 
-start "zapret: %~n0" /min "%BIN%winws.exe" --wf-tcp=80,443,1024-65535 --wf-udp=443,50000-50100,1024-65535 ^
---comment Discord --filter-udp=50000-50100 --filter-l7=discord,stun --dpi-desync=fake --dpi-desync-repeats=6 --new ^
---comment WARP --filter-tcp=443 --ipset-ip=162.159.36.1,162.159.46.1,2606:4700:4700::1111,2606:4700:4700::1001 --filter-l7=tls --dpi-desync=fake --dpi-desync-repeats=6 --dpi-desync-fooling=md5sig --dpi-desync-fake-tls="%BIN%tls_clienthello_www_google_com.bin" --new ^
+goto :eof
 
---comment QUIC --filter-udp=443 --hostlist="%LISTS%zapret-hosts-user.txt" --hostlist="%LISTS%zapret-hosts.txt" --hostlist-exclude="%LISTS%zapret-hosts-user-exclude.txt" --hostlist="%LISTS%zapret-hosts-auto.txt" --dpi-desync=fake --dpi-desync-repeats=6 --dpi-desync-fake-quic="%BIN%quic_initial_www_google_com.bin" --new ^
---comment HTTP --filter-tcp=80 --hostlist="%LISTS%zapret-hosts-user.txt" --hostlist="%LISTS%zapret-hosts.txt" --hostlist-exclude="%LISTS%zapret-hosts-user-exclude.txt" --hostlist-auto="%LISTS%zapret-hosts-auto.txt" --dpi-desync=fake,split2 --dpi-desync-autottl=2 --dpi-desync-fooling=md5sig --new ^
---comment HTTPS --filter-tcp=443 --hostlist="%LISTS%zapret-hosts-user.txt" --hostlist="%LISTS%zapret-hosts.txt" --hostlist-exclude="%LISTS%zapret-hosts-user-exclude.txt" --hostlist-auto="%LISTS%zapret-hosts-auto.txt" --dpi-desync=fake --dpi-desync-repeats=6 --dpi-desync-fooling=md5sig --dpi-desync-fake-tls="%BIN%tls_clienthello_www_google_com.bin" --new ^
+:install
+rem The arguments passed to the program calling this instance.
 
---comment Amazon --filter-udp=443 --ipset="%LISTS%ipset-amazonaws.txt" --dpi-desync=fake --dpi-desync-repeats=6 --dpi-desync-fake-quic="%BIN%quic_initial_www_google_com.bin" --new ^
---comment Amazon --filter-tcp=80 --ipset="%LISTS%ipset-amazonaws.txt" --dpi-desync=fake,split2 --dpi-desync-autottl=2 --dpi-desync-fooling=md5sig --new ^
---comment Amazon --filter-tcp=443,1024-65535 --ipset="%LISTS%ipset-amazonaws.txt" --dpi-desync=fake --dpi-desync-repeats=6 --dpi-desync-fooling=md5sig --dpi-desync-fake-tls="%BIN%tls_clienthello_www_google_com.bin" --new ^
---comment Amazon --filter-udp=1024-65535 --ipset="%LISTS%ipset-amazonaws.txt" --dpi-desync=fake --dpi-desync-autottl=2 --dpi-desync-repeats=12 --dpi-desync-any-protocol=1 --dpi-desync-fake-unknown-udp="%BIN%quic_initial_www_google_com.bin" --dpi-desync-cutoff=n3 --new ^
+call :configure
+call :combine
 
---comment Cloudflare --filter-udp=443,64090-64110 --ipset="%LISTS%ipset-cloudflare.txt" --dpi-desync=fake --dpi-desync-repeats=6 --dpi-desync-fake-quic="%BIN%quic_initial_www_google_com.bin" --new ^
---comment Cloudflare --filter-tcp=80,2099,5222-5223,8000-8020,8393-8400 --ipset="%LISTS%ipset-cloudflare.txt" --dpi-desync=fake,split2 --dpi-desync-autottl=2 --dpi-desync-fooling=md5sig --new ^
---comment Cloudflare --filter-tcp=443,6695-6705 --ipset="%LISTS%ipset-cloudflare.txt" --dpi-desync=fake --dpi-desync-repeats=6 --dpi-desync-fooling=md5sig --dpi-desync-fake-tls="%BIN%tls_clienthello_www_google_com.bin" --new ^
+if not exist "%ZAPRET_IPSET_USER%" (
+	type NUL >"%ZAPRET_IPSET_USER%"
+)
+if not exist "%ZAPRET_HOSTS_USER%" (
+	type NUL >"%ZAPRET_HOSTS_USER%"
+)
+if not exist "%ZAPRET_HOSTS_AUTO%" (
+	type NUL >"%ZAPRET_HOSTS_AUTO%"
+)
+if not exist "%ZAPRET_HOSTS_EXCLUDE%" (
+	type NUL >"%ZAPRET_HOSTS_EXCLUDE%"
+)
 
---comment ElectonicArts --filter-tcp=443 --ipset="%LISTS%ipset-elecronicarts.txt" --dpi-desync=fake --dpi-desync-repeats=6 --dpi-desync-fooling=md5sig --dpi-desync-fake-tls="%BIN%tls_clienthello_www_google_com.bin" --new ^
---comment BattleNet --filter-tcp=1119 --ipset="%LISTS%ipset-battlenet.txt" --dpi-desync=fake --dpi-desync-repeats=6 --dpi-desync-fooling=md5sig --dpi-desync-fake-tls="%BIN%tls_clienthello_www_google_com.bin" --new ^
+sc create %1 binPath= "\"%BIN%winws.exe\" %ARGUMENTS%" start= %2
 
---comment Warframe --filter-udp=3074-3480,4950-4955,4960-4965,4970-4975,4980-4985,4990-4995 --ipset="%LISTS%ipset-warframe.txt" --dpi-desync=fake --dpi-desync-autottl=2 --dpi-desync-repeats=12 --dpi-desync-any-protocol=1 --dpi-desync-fake-unknown-udp="%BIN%quic_initial_www_google_com.bin" --dpi-desync-cutoff=n3 --new ^
---comment Warframe --filter-tcp=6695-6705 --ipset="%LISTS%ipset-warframe.txt" --dpi-desync=fake --dpi-desync-repeats=6 --dpi-desync-fooling=md5sig --dpi-desync-fake-tls="%BIN%tls_clienthello_www_google_com.bin" --new ^
-
---comment Linode --filter-udp=443,1024-65535 --ipset="%LISTS%ipset-linodeusercontent.txt" --ipset="%LISTS%ipset-panicartstudios.txt" --dpi-desync=fake --dpi-desync-repeats=6 --dpi-desync-fake-quic="%BIN%quic_initial_www_google_com.bin" --new ^
---comment Linode --filter-tcp=80 --ipset="%LISTS%ipset-linodeusercontent.txt" --ipset="%LISTS%ipset-panicartstudios.txt" --dpi-desync=fake,split2 --dpi-desync-autottl=2 --dpi-desync-fooling=md5sig --new ^
---comment Linode --filter-tcp=443,1024-65535 --ipset="%LISTS%ipset-linodeusercontent.txt" --ipset="%LISTS%ipset-panicartstudios.txt" --dpi-desync=fake --dpi-desync-repeats=6 --dpi-desync-fooling=md5sig --dpi-desync-fake-tls="%BIN%tls_clienthello_www_google_com.bin"
+goto :eof

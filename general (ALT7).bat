@@ -34,11 +34,11 @@ set FAKE_UDP=%BIN%quic_initial_vk_com.bin
 set FAKE_HTTP=%BIN%http_iana_org.bin
 set FAKE_TLS=%BIN%tls_clienthello_vk_com.bin
 
-set DISCORD_STRATEGY=--dpi-desync=fake --dpi-desync-autottl=2 --dpi-desync-repeats=11
-set QUIC_STRATEGY=--dpi-desync=fake --dpi-desync-autottl=2 --dpi-desync-repeats=11 --dpi-desync-fake-quic="%FAKE_QUIC%"
-set UDP_STRATEGY=--dpi-desync=fake --dpi-desync-autottl=2 --dpi-desync-repeats=10 --dpi-desync-any-protocol=1 --dpi-desync-fake-unknown-udp="%FAKE_UDP%" --dpi-desync-cutoff=n2
+set DISCORD_STRATEGY=--dpi-desync=fake --dpi-desync-autottl=5 --dpi-desync-repeats=10
+set QUIC_STRATEGY=--dpi-desync=fake --dpi-desync-ttl=4 --dpi-desync-repeats=10 --dpi-desync-fake-quic="%FAKE_QUIC%"
+set UDP_STRATEGY=--dpi-desync=fake --dpi-desync-autottl=5 --dpi-desync-repeats=10 --dpi-desync-any-protocol=1 --dpi-desync-fooling=badseq --dpi-desync-fake-unknown-udp="%FAKE_UDP%" --dpi-desync-cutoff=n2
 set HTTP_STRATEGY=--dpi-desync=fake,fakedsplit --dpi-desync-autottl=2 --dpi-desync-fooling=md5sig --dpi-desync-fake-http="%FAKE_HTTP%"
-set HTTPS_STRATEGY=--dpi-desync=fake,multidisorder --dpi-desync-split-pos=1,midsld --dpi-desync-repeats=11 --dpi-desync-fooling=md5sig --dpi-desync-fake-tls-mod=rnd,dupsid,sni=www.google.com
+set HTTPS_STRATEGY=--dpi-desync=fake,multidisorder --dpi-desync-split-pos=1,midsld --dpi-desync-repeats=11 --dpi-desync-fooling=md5sig --dpi-desync-fake-tls="%FAKE_TLS%"
 
 set ARGUMENTS=--wf-tcp=80,443,1024-65535 --wf-udp=443,50000-50100,1024-65535
 

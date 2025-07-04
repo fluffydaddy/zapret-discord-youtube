@@ -1,0 +1,3 @@
+cdn.battleye.com
+battleye.b-cdn.net
+update.battleye.com

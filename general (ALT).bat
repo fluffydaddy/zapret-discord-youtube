@@ -55,6 +55,19 @@ set ARGUMENTS=!ARGUMENTS! --filter-tcp=80 --ipset="%ZAPRET_IPSET_USER%" --ipset=
 set ARGUMENTS=!ARGUMENTS! --filter-tcp=443,1024-65535 --ipset="%ZAPRET_IPSET_USER%" --ipset="%ZAPRET_IPSET%" %HTTPS_STRATEGY% --new
 set ARGUMENTS=!ARGUMENTS! --filter-udp=1024-65535 --ipset="%ZAPRET_IPSET_USER%" --ipset="%ZAPRET_IPSET%" %UDP_STRATEGY%
 
+if not exist "%ZAPRET_IPSET_USER%" (
+	type NUL >"%ZAPRET_IPSET_USER%"
+)
+if not exist "%ZAPRET_HOSTS_USER%" (
+	type NUL >"%ZAPRET_HOSTS_USER%"
+)
+if not exist "%ZAPRET_HOSTS_AUTO%" (
+	type NUL >"%ZAPRET_HOSTS_AUTO%"
+)
+if not exist "%ZAPRET_HOSTS_EXCLUDE%" (
+	type NUL >"%ZAPRET_HOSTS_EXCLUDE%"
+)
+
 goto :eof
 
 :combine
@@ -82,19 +95,6 @@ rem The arguments passed to the program calling this instance.
 
 call :configure
 call :combine
-
-if not exist "%ZAPRET_IPSET_USER%" (
-	type NUL >"%ZAPRET_IPSET_USER%"
-)
-if not exist "%ZAPRET_HOSTS_USER%" (
-	type NUL >"%ZAPRET_HOSTS_USER%"
-)
-if not exist "%ZAPRET_HOSTS_AUTO%" (
-	type NUL >"%ZAPRET_HOSTS_AUTO%"
-)
-if not exist "%ZAPRET_HOSTS_EXCLUDE%" (
-	type NUL >"%ZAPRET_HOSTS_EXCLUDE%"
-)
 
 sc create %1 binPath= "\"%BIN%winws.exe\" %ARGUMENTS%" start= %2
 

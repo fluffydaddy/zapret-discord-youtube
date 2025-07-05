@@ -38,7 +38,7 @@ set DISCORD_STRATEGY=--dpi-desync=fake --dpi-desync-autottl=2 --dpi-desync-repea
 set QUIC_STRATEGY=--dpi-desync=fake --dpi-desync-autottl=2 --dpi-desync-repeats=6 --dpi-desync-fake-quic="%FAKE_QUIC%"
 set UDP_STRATEGY=--dpi-desync=fake --dpi-desync-autottl=2 --dpi-desync-repeats=12 --dpi-desync-any-protocol=1 --dpi-desync-fake-unknown-udp="%FAKE_UDP%" --dpi-desync-cutoff=n2
 set HTTP_STRATEGY=--dpi-desync=fake,multisplit --dpi-desync-autottl=2 --dpi-desync-fooling=md5sig --dpi-desync-fake-http="%FAKE_HTTP%"
-set HTTPS_STRATEGY=--dpi-desync=multisplit --dpi-desync-split-seqovl=652 --dpi-desync-split-pos=2 --dpi-desync-split-seqovl-pattern="%FAKE_TLS%" --new ^
+set HTTPS_STRATEGY=--dpi-desync=multisplit --dpi-desync-split-seqovl=652 --dpi-desync-split-pos=2 --dpi-desync-split-seqovl-pattern="%FAKE_TLS%"
 
 set ARGUMENTS=--wf-tcp=80,443,1024-65535 --wf-udp=443,50000-50100,1024-65535
 

@@ -10,8 +10,8 @@ body:
       label: ⚠️ Чеклист
       description: Перед созданием нового Issue, удостоверьтесь что выполнили следующие пункты
       options:
-        - label: Я искал решение проблемы в [README](https://github.com/Flowseal/zapret-discord-youtube/blob/main/README.md) и среди [Issues](https://github.com/Flowseal/zapret-discord-youtube/issues)
-        - label: Я скачал ``zapret-discord-youtube`` из [релизов официального репозитория](https://github.com/Flowseal/zapret-discord-youtube/releases)
+        - label: Я искал решение проблемы в [README](https://github.com/fluffydaddy/zapret-discord-youtube/blob/main/README.md) и среди [Issues](https://github.com/fluffydaddy/zapret-discord-youtube/issues)
+        - label: Я скачал ``zapret-discord-youtube`` из [релизов официального репозитория](https://github.com/fluffydaddy/zapret-discord-youtube/releases)
 
   - type: textarea
     id: description

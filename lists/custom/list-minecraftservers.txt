@@ -1,3 +1,4 @@
+# Bedrock
 cubecraft.net
 inpvp.net
 galaxite.net
@@ -19,3 +20,8 @@ mco.lbsg.net
 eu.lifeboat.games
 mco.lifeboat.games
 eu.play.galaxite.net
+
+# Java
+hypixel.net
+mc.hypixel.net
+hypixel.network

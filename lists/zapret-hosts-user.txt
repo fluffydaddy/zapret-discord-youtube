@@ -6,7 +6,6 @@ cdn.betterttv.net
 7tv.app
 7tv.io
 10tv.app
-4pda.ws
 phncdn.com
 etahub.com
 xvideos-cdn.com
@@ -29,7 +28,6 @@ cdn77.org
 cdn84.com
 godaddy.com
 digitalocean.com
-signalcdn.com
 azureedge.net
 stackpathcdn.com
 amplifyapp.com
@@ -55,3 +53,12 @@ bstats.org
 detectportal.firefox.com
 rublacklist.net
 roskomsvoboda.org
+medium.com
+apkmirror.com
+meduza.io
+ntc.party
+knowyourmeme.com
+prostovpn.org
+thenewone.lol
+lifehacker.ru
+ad.mrtnsvr.com

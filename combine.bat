@@ -1,9 +1,24 @@
 @echo off
 
-set "ZAPRET_CUSTOM=%1"
+cd /d "%~dp0"
 
-set "ZAPRET_IPSET=%2"
-set "ZAPRET_HOSTS=%3"
+if "%~1"=="" (
+	set "ZAPRET_CUSTOM=%~dp0lists\custom\"
+) else (
+	set "ZAPRET_CUSTOM=%1"
+)
+
+if "%~2"=="" (
+	set "ZAPRET_IPSET=%~dp0lists\zapret-ipset.txt"
+) else (
+	set "ZAPRET_IPSET=%2"
+)
+
+if "%~3"=="" (
+	set "ZAPRET_HOSTS=%~dp0lists\zapret-hosts.txt"
+) else (
+	set "ZAPRET_HOSTS=%3"
+)
 
 type NUL >"%ZAPRET_HOSTS%"
 for /f "delims=|" %%f in ('dir /b "%ZAPRET_CUSTOM%list-*.txt"') do (

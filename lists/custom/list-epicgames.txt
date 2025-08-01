@@ -1,0 +1,34 @@
+3lateral.com
+artstation.com
+capturingreality.com
+cubicmotion.com
+battlebreakers.com
+eac-cdn.com
+easy.ac
+easyanticheat.net
+epicgames.com
+epicgames.dev
+epicgames.org
+epicgames.net
+epicgamescdn.com
+fab.com
+fortnite.com
+hyprsense.com
+paragon.com
+playparagon.com
+quixel.com
+quixel.se
+radgametools.com
+realityscan.com
+roborecall.com
+shadowcomplex.com
+sketchfab.com
+spyjinx.com
+twinmotion.com
+unrealengine.com
+unrealtournament.com
+eac-cdn.com
+
+# regexp:^cdn\d-epicgames-\d+\.file\.myqcloud\.com$ @cn
+# regexp:^epicgames-download\d\.akamaized\.net$
+# regexp:^epicgames-download\d-\d+\.file\.myqcloud\.com$ @cn

@@ -1,6 +1,6 @@
 @echo off
 setlocal EnableDelayedExpansion
-set "LOCAL_VERSION=1.8.5-patch"
+set "LOCAL_VERSION=1.8.6"
 
 :: External commands
 if "%~1"=="status_zapret" (
@@ -9,7 +9,11 @@ if "%~1"=="status_zapret" (
 )
 
 if "%~1"=="check_updates" (
-    call :service_check_updates soft
+    if not "%~2"=="soft" (
+        start /b service check_updates soft
+    ) else (
+        call :service_check_updates soft
+    )
     exit /b
 )
 
@@ -32,14 +36,16 @@ echo 2. Remove Services
 echo 3. Check Service Status
 echo 4. Run Diagnostics
 echo 5. Check Updates
+echo 6. Update ipset list
 echo 0. Exit
-set /p menu_choice=Enter choice (0-5): 
+set /p menu_choice=Enter choice (0-6): 
 
 if "%menu_choice%"=="1" goto service_install
 if "%menu_choice%"=="2" goto service_remove
 if "%menu_choice%"=="3" goto service_status
 if "%menu_choice%"=="4" goto service_diagnostics
 if "%menu_choice%"=="5" goto service_check_updates
+if "%menu_choice%"=="6" goto ipset_update
 if "%menu_choice%"=="0" exit /b
 goto menu
 
@@ -48,7 +54,7 @@ goto menu
 :service_status
 cls
 chcp 437 > nul
-echo Checking services and tasks...
+for /f "tokens=2*" %%A in ('reg query "HKLM\System\CurrentControlSet\Services\zapret" /v zapret-discord-youtube 2^>nul') do echo Service strategy installed from "%%B"
 call :test_service zapret
 call :test_service WinDivert
 
@@ -78,7 +84,7 @@ if "%ServiceStatus%"=="RUNNING" (
         echo "%ServiceName%" service is RUNNING.
     )
 ) else if not "%~2"=="soft" (
-    echo "%ServiceName%" is NOT running.
+    echo "%ServiceName%" service is NOT running.
 )
 
 exit /b
@@ -139,10 +145,14 @@ set SRVCNAME=zapret
 
 net stop %SRVCNAME% >nul 2>&1
 sc delete %SRVCNAME% >nul 2>&1
-call "%selectedFile%" "install" %SRVCNAME% auto
+call "%selectedFile%" "install" "%SRVCNAME%" "auto"
 sc config %SRVCNAME% DisplayName= "zapret"
 sc description %SRVCNAME% "Zapret DPI bypass software"
 sc start %SRVCNAME%
+for %%F in ("!file%choice%!") do (
+    set "filename=%%~nF"
+)
+reg add "HKLM\System\CurrentControlSet\Services\zapret" /v zapret-discord-youtube /t REG_SZ /d "!filename!" /f
 
 pause
 goto menu
@@ -151,6 +161,7 @@ goto menu
 :: CHECK UPDATES =======================
 :service_check_updates
 chcp 437 > nul
+cls
 
 :: Set current version and URLs
 set "GITHUB_VERSION_URL=https://raw.githubusercontent.com/fluffydaddy/zapret-discord-youtube/main/.service/version.txt"
@@ -164,29 +175,34 @@ for /f "delims=" %%A in ('powershell -command "(Invoke-WebRequest -Uri \"%GITHUB
 if not defined GITHUB_VERSION (
     echo Warning: failed to fetch the latest version. Check your internet connection. This warning does not affect the operation of zapret
     pause
-    if "%1"=="soft" exit /b 
+    if "%1"=="soft" exit 
     goto menu
 )
 
 :: Version comparison
 if "%LOCAL_VERSION%"=="%GITHUB_VERSION%" (
     echo Latest version installed: %LOCAL_VERSION%
-) else (
-    echo New version available: %GITHUB_VERSION%
-    echo Release page: %GITHUB_RELEASE_URL%%GITHUB_VERSION%
     
-    set "CHOICE="
-    set /p "CHOICE=Do you want to automatically download the new version? (Y/N) (default: Y) "
-    if "!CHOICE!"=="" set "CHOICE=Y"
-    if "!CHOICE!"=="y" set "CHOICE=Y"
+    if "%1"=="soft" exit 
+    pause
+    goto menu
+) 
 
-    if /i "!CHOICE!"=="Y" (
-        echo Opening the download page...
-        start "" "%GITHUB_DOWNLOAD_URL%%GITHUB_VERSION%.rar"
-    )
+echo New version available: %GITHUB_VERSION%
+echo Release page: %GITHUB_RELEASE_URL%%GITHUB_VERSION%
+
+set "CHOICE="
+set /p "CHOICE=Do you want to automatically download the new version? (Y/N) (default: Y) "
+if "%CHOICE%"=="" set "CHOICE=Y"
+if /i "%CHOICE%"=="y" set "CHOICE=Y"
+
+if /i "%CHOICE%"=="Y" (
+    echo Opening the download page...
+    start "" "%GITHUB_DOWNLOAD_URL%%GITHUB_VERSION%.rar"
 )
 
-if "%1"=="soft" exit /b 
+
+if "%1"=="soft" exit 
 pause
 goto menu
 
@@ -203,7 +219,7 @@ if !errorlevel!==0 (
     call :PrintRed "https://github.com/Flowseal/zapret-discord-youtube/issues/417"
 ) else (
     call :PrintGreen "Adguard check passed"
-) 
+)
 echo:
 
 :: Killer
@@ -213,6 +229,16 @@ if !errorlevel!==0 (
     call :PrintRed "https://github.com/Flowseal/zapret-discord-youtube/issues/2512#issuecomment-2821119513"
 ) else (
     call :PrintGreen "Killer check passed"
+)
+echo:
+
+:: Intel Connectivity Network Service
+sc query | findstr /I "Intel" | findstr /I "Connectivity" | findstr /I "Network" > nul
+if !errorlevel!==0 (
+    call :PrintRed "[X] Intel Connectivity Network Service found. It conflicts with zapret"
+    call :PrintRed "https://github.com/ValdikSS/GoodbyeDPI/issues/541#issuecomment-2661670982"
+) else (
+    call :PrintGreen "Intel Connectivity check passed"
 )
 echo:
 
@@ -310,6 +336,52 @@ echo:
 
 pause
 goto menu
+
+
+:: IPSET UPDATE =======================
+:ipset_update
+chcp 437 > nul
+cls
+
+set "cloudflareFile=%~dp0lists\custom\ipset-cloudflare.txt"
+set "amazonFile=%~dp0lists\custom\ipset-amazon.txt"
+
+set "cloudflareUrl=https://raw.githubusercontent.com/V3nilla/IPSets-For-Bypass-in-Russia/refs/heads/main/ipset-cloudflare.txt"
+set "amazonUrl=https://raw.githubusercontent.com/V3nilla/IPSets-For-Bypass-in-Russia/refs/heads/main/ipset-amazon.txt"
+
+echo Updating ipset-cloudflare...
+
+if exist "%SystemRoot%\System32\curl.exe" (
+    curl -L -o "%cloudflareFile%" "%cloudflareUrl%"
+) else (
+    powershell -Command ^
+        "$cloudflareUrl = '%cloudflareUrl%';" ^
+        "$out = '%cloudflareFile%';" ^
+        "$dir = Split-Path -Parent $out;" ^
+        "if (-not (Test-Path $dir)) { New-Item -ItemType Directory -Path $dir | Out-Null };" ^
+        "$res = Invoke-WebRequest -Uri $cloudflareUrl -TimeoutSec 10 -UseBasicParsing;" ^
+        "if ($res.StatusCode -eq 200) { $res.Content | Out-File -FilePath $out -Encoding UTF8 } else { exit 1 }"
+)
+
+echo Updating ipset-amazon...
+
+if exist "%SystemRoot%\System32\curl.exe" (
+    curl -L -o "%amazonFile%" "%amazonUrl%"
+) else (
+    powershell -Command ^
+        "$amazonUrl = '%amazonUrl%';" ^
+        "$out = '%amazonFile%';" ^
+        "$dir = Split-Path -Parent $out;" ^
+        "if (-not (Test-Path $dir)) { New-Item -ItemType Directory -Path $dir | Out-Null };" ^
+        "$res = Invoke-WebRequest -Uri $amazonUrl -TimeoutSec 10 -UseBasicParsing;" ^
+        "if ($res.StatusCode -eq 200) { $res.Content | Out-File -FilePath $out -Encoding UTF8 } else { exit 1 }"
+)
+
+echo Finished.
+
+pause
+goto menu
+
 
 :: Utility functions
 

@@ -1,3 +1,5 @@
 cdn.battleye.com
 battleye.b-cdn.net
 update.battleye.com
+battleye.com
+b-cdn.net

@@ -1,0 +1,29 @@
+# References:
+# https://stackexchange.com/sites
+# https://meta.stackexchange.com/questions/81379/can-we-have-a-list-of-all-the-stack-exchange-domains-somewhere-for-firewall-pur
+
+askubuntu.com
+blogoverflow.com
+codeforaliving.io
+mathoverflow.net
+serverfault.com
+sstatic.net
+stackapps.com
+stackauth.com
+stackexchange.com
+stackmod.blog
+stackoverflow.blog
+stackoverflow.co
+stackoverflow.com
+stackoverflow.email
+stackoverflow.help
+stackoverflow.net
+stackoverflowbusiness.com
+stackoverflowcareers.com
+stackoverflowjobs.com
+stackoverflowsolutions.com
+stackoverflowteams.com
+stacksnippets.net
+superuser.com
+tex-talk.net
+thesffblog.com

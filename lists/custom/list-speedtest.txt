@@ -1,0 +1,4 @@
+speedtest.net
+ooklaserver.net
+speedtest.timernet.ru
+spookla.alltelecom.ru

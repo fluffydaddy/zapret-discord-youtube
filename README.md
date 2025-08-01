@@ -1,6 +1,6 @@
 <div align="center">
 
-# <img src="https://cdn-icons-png.flaticon.com/128/5968/5968756.png" height=28 /> <a href="https://github.com/Flowseal/">Flowseal</a><a href="https://github.com/Flowseal/zapret-discord-youtube">/zapret-discord-youtube</a> <img src="https://cdn-icons-png.flaticon.com/128/1384/1384060.png" height=28 />
+# <img src="https://cdn-icons-png.flaticon.com/128/5968/5968756.png" height=28 /> <a href="https://github.com/fluffydaddy/">fluffydaddy</a><a href="https://github.com/fluffydaddy/zapret-discord-youtube">/zapret-discord-youtube</a> <img src="https://cdn-icons-png.flaticon.com/128/1384/1384060.png" height=28 />
 
 *"Plug & Play"* обход блокировок иностранных платформ, <img src="https://cdn-icons-png.flaticon.com/128/5968/5968756.png" height=11 /> **Discord** и <img src="https://cdn-icons-png.flaticon.com/128/1384/1384060.png" height=11 /> **YouTube** для Windows
 
@@ -26,7 +26,7 @@
 
 ## ⚙️Использование
 
-1. Загрузите архив (zip/rar) со [страницы последнего релиза](https://github.com/Flowseal/zapret-discord-youtube/releases/latest)
+1. Загрузите архив (zip/rar) со [страницы последнего релиза](https://github.com/fluffydaddy/zapret-discord-youtube/releases/latest)
 
 2. Распакуйте содержимое архива по пути, который не содержит кириллицу/спец. символы
 
@@ -108,7 +108,7 @@ sc delete {название, которые вы узнали в шаге 1}
 
 ### Не нашли своей проблемы
 
-* Создайте её [тут](https://github.com/Flowseal/zapret-discord-youtube/issues)
+* Создайте её [тут](https://github.com/fluffydaddy/zapret-discord-youtube/issues)
 
 ## 🗒️Добавление адресов прочих заблокированных ресурсов
 
@@ -122,20 +122,20 @@ sc delete {название, которые вы узнали в шаге 1}
 
 Также, вы можете материально поддержать разработчика zapret [тут](https://github.com/bol-van/zapret?tab=readme-ov-file#%D0%BF%D0%BE%D0%B4%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D1%82%D1%8C-%D1%80%D0%B0%D0%B7%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%87%D0%B8%D0%BA%D0%B0)
 
-<a href="https://star-history.com/#Flowseal/zapret-discord-youtube&Date">
+<a href="https://star-history.com/#fluffydaddy/zapret-discord-youtube&Date">
  <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=Flowseal/zapret-discord-youtube&type=Date&theme=dark" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=Flowseal/zapret-discord-youtube&type=Date" />
-   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=Flowseal/zapret-discord-youtube&type=Date" />
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=fluffydaddy/zapret-discord-youtube&type=Date&theme=dark" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=fluffydaddy/zapret-discord-youtube&type=Date" />
+   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=fluffydaddy/zapret-discord-youtube&type=Date" />
  </picture>
 </a>
 
 ## ⚖️Лицензирование
 
-Проект распространяется на условиях лицензии [MIT](https://github.com/Flowseal/zapret-discord-youtube/blob/main/LICENSE.txt)
+Проект распространяется на условиях лицензии [MIT](https://github.com/fluffydaddy/zapret-discord-youtube/blob/main/LICENSE.txt)
 
 ## 🩷Благодарность участникам проекта
 
-[![Contributors](https://contrib.rocks/image?repo=Flowseal/zapret-discord-youtube)](https://github.com/Flowseal/zapret-discord-youtube/graphs/contributors)
+[![Contributors](https://contrib.rocks/image?repo=fluffydaddy/zapret-discord-youtube)](https://github.com/fluffydaddy/zapret-discord-youtube/graphs/contributors)
 
 💖 Отдельная благодарность разработчику [zapret](https://github.com/bol-van/zapret) - [bol-van](https://github.com/bol-van)

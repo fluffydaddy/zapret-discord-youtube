@@ -14,6 +14,7 @@ if "%~1"=="install" (
 	exit /b
 )
 
+
 :configure
 
 set BIN=%~dp0bin\
@@ -77,6 +78,7 @@ goto :eof
 
 call "%~dp0combine.bat" "%ZAPRET_CUSTOM%" "%ZAPRET_IPSET%" "%ZAPRET_HOSTS%"
 
+
 goto :eof
 
 :main
@@ -93,12 +95,27 @@ start "zapret: %~n0" /min "%BIN%winws.exe" %ARGUMENTS%
 
 goto :eof
 
+
 :install
 rem The arguments passed to the program calling this instance.
 
 call :configure
 call :combine
 
-sc create %1 binPath= "\"%BIN%winws.exe\" %ARGUMENTS%" start= %2
+rem  %1 = входная строка, %2 = имя переменной, куда сохранить экранированную
+:: set "in=%~1"
+set "in=%ARGUMENTS%"
+set "out="
+for /f "delims=" %%A in ("!in!") do (
+  set "line=%%A"
+  rem заменить " → \"
+  set "line=!line:"=\"!"
+  set "out=!line!"
+)
+:: set "%~2=%out%"
+set "ARG_ESCAPED=%out%"
+
+sc create "%1" binPath= "\"%BIN%winws.exe\" %ARG_ESCAPED%" start= "%2"
 
 goto :eof
+

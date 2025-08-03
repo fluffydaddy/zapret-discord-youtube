@@ -39,6 +39,10 @@ auth0.com
 auth0.org
 auth0.dev
 
+# Minecraft
+cdn.modrinth.com
+edge.forgecdn.net
+
 # Found with help --hostlist-auto
 o.pki.goog
 screencore.io

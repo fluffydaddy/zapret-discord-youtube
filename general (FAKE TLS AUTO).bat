@@ -14,6 +14,7 @@ if "%~1"=="install" (
 	exit /b
 )
 
+
 :configure
 
 set BIN=%~dp0bin\
@@ -35,7 +36,7 @@ set FAKE_HTTP=%BIN%http_iana_org.bin
 set FAKE_TLS=%BIN%tls_clienthello_iana_org.bin
 
 set DISCORD_STRATEGY=--dpi-desync=fake --dpi-desync-repeats=6 --dpi-desync-fake-discord=0x00 --dpi-desync-fake-stun=0x00
-set QUIC_STRATEGY=--dpi-desync=fake --dpi-desync-repeats=11 --dpi-desync-fake-quic="%FAKE_QUIC%"
+set QUIC_STRATEGY=--dpi-desync=fake --dpi-desync-repeats=6 --dpi-desync-fake-quic="%FAKE_QUIC%"
 set UDP_STRATEGY=--dpi-desync=fake --dpi-desync-autottl=2 --dpi-desync-repeats=10 --dpi-desync-any-protocol=1 --dpi-desync-fake-unknown-udp="%FAKE_UDP%" --dpi-desync-cutoff=n2
 set SYNDATA_STRATEGY=--dpi-desync=syndata --dpi-desync-fooling=badseq,hopbyhop2 --dpi-desync-fake-unknown-udp="%FAKE_UDP%" --dpi-desync-cutoff=n2
 set HTTP_STRATEGY=--dpi-desync=fake,fakedsplit --dpi-desync-autottl=2 --dpi-desync-fooling=md5sig --dpi-desync-fake-http="%FAKE_HTTP%"
@@ -60,11 +61,13 @@ set ARGUMENTS=!ARGUMENTS! --filter-udp=1024-65535 --ipset="%ZAPRET_IPSET_USER%" 
 
 goto :eof
 
+
 :combine
 
 call "%~dp0combine.bat" "%ZAPRET_CUSTOM%" "%ZAPRET_IPSET%" "%ZAPRET_HOSTS%"
 
 goto :eof
+
 
 :main
 
@@ -79,6 +82,7 @@ call :combine
 start "zapret: %~n0" /min "%BIN%winws.exe" %ARGUMENTS%
 
 goto :eof
+
 
 :install
 rem The arguments passed to the program calling this instance.
@@ -99,6 +103,20 @@ if not exist "%ZAPRET_HOSTS_EXCLUDE%" (
 	type NUL >"%ZAPRET_HOSTS_EXCLUDE%"
 )
 
-sc create %1 binPath= "\"%BIN%winws.exe\" %ARGUMENTS%" start= %2
+rem  %1 = входная строка, %2 = имя переменной, куда сохранить экранированную
+:: set "in=%~1"
+set "in=%ARGUMENTS%"
+set "out="
+for /f "delims=" %%A in ("!in!") do (
+  set "line=%%A"
+  rem заменить " → \"
+  set "line=!line:"=\"!"
+  set "out=!line!"
+)
+:: set "%~2=%out%"
+set "ARG_ESCAPED=%out%"
+
+sc create "%1" binPath= "\"%BIN%winws.exe\" %ARG_ESCAPED%" start= "%2"
 
 goto :eof
+

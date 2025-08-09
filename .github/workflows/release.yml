@@ -22,12 +22,12 @@ jobs:
 
       - name: Create ZIP
         run: |
-          zip -r "/tmp/${REPO_NAME}-${RELEASE_VERSION}.zip" . -x".git/**\*" ".github/**\*" ".service/**\*" ".gitignore"
+          zip -r "/tmp/${REPO_NAME}-${RELEASE_VERSION}.zip" . -x".git/*" -x".github/*" -x".service/*" -x".gitignore"
 
       - name: Create RAR
         run: |
           sudo apt-get update && sudo apt-get install -y rar
-          rar a -r "/tmp/${REPO_NAME}-${RELEASE_VERSION}.rar" . -x".git" -x".github" -x".service" -x".gitignore"
+          rar a -r "/tmp/${REPO_NAME}-${RELEASE_VERSION}.rar" . -x".git/" -x".github/" -x".service/" -x".gitignore"
 
       - name: Create GitHub Release
         id: create_release

@@ -20,11 +20,14 @@ jobs:
           echo "REPO_NAME=${GITHUB_REPOSITORY##*/}" >> $GITHUB_ENV
           echo "RELEASE_VERSION=${{ github.event.inputs.release_version }}" >> $GITHUB_ENV
 
-      - name: Create ZIP and RAR archives
+      - name: Create ZIP
         run: |
-          zip -r "${REPO_NAME}-${RELEASE_VERSION}.zip" .
+          zip -r "/tmp/${REPO_NAME}-${RELEASE_VERSION}.zip" .
+
+      - name: Create RAR
+        run: |
           sudo apt-get update && sudo apt-get install -y rar
-          rar a "${REPO_NAME}-${RELEASE_VERSION}.rar" . -x"${REPO_NAME}-${RELEASE_VERSION}.zip"
+          rar a -r "/tmp/${REPO_NAME}-${RELEASE_VERSION}.rar" .
 
       - name: Create GitHub Release
         id: create_release
@@ -43,7 +46,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./${{ env.REPO_NAME }}-${{ env.RELEASE_VERSION }}.zip
+          asset_path: /tmp/${{ env.REPO_NAME }}-${{ env.RELEASE_VERSION }}.zip
           asset_name: ${{ env.REPO_NAME }}-${{ env.RELEASE_VERSION }}.zip
           asset_content_type: application/zip
 
@@ -53,6 +56,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./${{ env.REPO_NAME }}-${{ env.RELEASE_VERSION }}.rar
+          asset_path: /tmp/${{ env.REPO_NAME }}-${{ env.RELEASE_VERSION }}.rar
           asset_name: ${{ env.REPO_NAME }}-${{ env.RELEASE_VERSION }}.rar
           asset_content_type: application/vnd.rar

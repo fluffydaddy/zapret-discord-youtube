@@ -64,7 +64,7 @@ call service.bat status_zapret
 call service.bat check_updates
 echo:
 
-start "zapret: %~n0" /min "%BIN%winws.exe" %ARGUMENTS%
+start "zapret: %~n0" /min "%ZAPRET_BIN%winws.exe" %ARGUMENTS%
 
 goto :eof
 

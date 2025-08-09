@@ -74,7 +74,7 @@ echo:
 
 call :combine
 
-start "zapret: %~n0" /min "%BIN%winws.exe" %ARGUMENTS%
+start "zapret: %~n0" /min "%ZAPRET_BIN%winws.exe" %ARGUMENTS%
 
 goto :eof
 

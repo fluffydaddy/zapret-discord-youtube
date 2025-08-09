@@ -1,0 +1,3 @@
+nexusmods.com
+nexus-cdn.com
+supporter-files.nexus-cdn.com

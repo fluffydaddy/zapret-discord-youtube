@@ -4,6 +4,7 @@ cloud.google.com
 googleusercontent.com
 googlecode.com
 dl.google.com
+l.google.com
 
 google-analytics.com
 googletagservices.com
@@ -12,10 +13,10 @@ tagmanager.google.com
 
 # fonts.gstatic.com
 # fonts.googleapis.com
-maps.googleapis.com
-ssl.gstatic.com
+# maps.googleapis.com
+# ssl.gstatic.com
 apis.google.com
-googleapis.com
+# googleapis.com
 
 play.googleapi.com
 play.google.com

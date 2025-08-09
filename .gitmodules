@@ -1,3 +1,0 @@
-[submodule "cygwin"]
-	path = cygwin
-	url = https://github.com/fluffydaddy/cygwin.git

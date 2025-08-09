@@ -1,0 +1,58 @@
+name: Manual Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_version:
+        required: true
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set variables
+        id: vars
+        run: |
+          echo "REPO_NAME=${GITHUB_REPOSITORY##*/}" >> $GITHUB_ENV
+          echo "RELEASE_VERSION=${{ github.event.inputs.release_version }}" >> $GITHUB_ENV
+
+      - name: Create ZIP and RAR archives
+        run: |
+          zip -r "${REPO_NAME}-${RELEASE_VERSION}.zip" .
+          sudo apt-get update && sudo apt-get install -y rar
+          rar a "${REPO_NAME}-${RELEASE_VERSION}.rar" .
+
+      - name: Create GitHub Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.RELEASE_VERSION }}
+          release_name: Release ${{ env.RELEASE_VERSION }}
+          draft: false
+          prerelease: false
+
+      - name: Upload ZIP
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./${{ env.REPO_NAME }}-${{ env.RELEASE_VERSION }}.zip
+          asset_name: ${{ env.REPO_NAME }}-${{ env.RELEASE_VERSION }}.zip
+          asset_content_type: application/zip
+
+      - name: Upload RAR
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./${{ env.REPO_NAME }}-${{ env.RELEASE_VERSION }}.rar
+          asset_name: ${{ env.REPO_NAME }}-${{ env.RELEASE_VERSION }}.rar
+          asset_content_type: application/vnd.rar

@@ -15,6 +15,7 @@ fr.hivebedrock.network
 sg.hivebedrock.network
 
 play.inpvp.net
+play.cubecraft.net
 mco.cubecraft.net
 mco.lbsg.net
 eu.lifeboat.games

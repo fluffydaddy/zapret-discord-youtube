@@ -24,7 +24,7 @@ jobs:
         run: |
           zip -r "${REPO_NAME}-${RELEASE_VERSION}.zip" .
           sudo apt-get update && sudo apt-get install -y rar
-          rar a "${REPO_NAME}-${RELEASE_VERSION}.rar" .
+          rar a "${REPO_NAME}-${RELEASE_VERSION}.rar" . -x"${REPO_NAME}-${RELEASE_VERSION}.zip"
 
       - name: Create GitHub Release
         id: create_release

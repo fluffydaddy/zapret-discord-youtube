@@ -22,7 +22,7 @@ jobs:
 
       - name: Create ZIP
         run: |
-          zip -r "/tmp/${REPO_NAME}-${RELEASE_VERSION}.zip" . -x".git" ".github" ".service" ".gitignore"
+          zip -r "/tmp/${REPO_NAME}-${RELEASE_VERSION}.zip" . -x".git/**\*" ".github/**\*" ".service/**\*" ".gitignore"
 
       - name: Create RAR
         run: |

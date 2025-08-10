@@ -82,9 +82,9 @@ goto :eof
 :install
 rem The arguments passed to the program calling this instance.
 
-call "%FUNCTIONS_SCRIPT%" escape !ARGUMENTS! ARG_ESCAPED
+call "%FUNCTIONS_SCRIPT%" escape "!ARGUMENTS!" ARG_ESCAPED
 
-sc create "%SERVICE_NAME%" binPath= "\"%ZAPRET_BIN%winws.exe\" %ARG_ESCAPED%" start= "%SERVICE_BOOT_FLAG%"
+sc create "%SERVICE_NAME%" binPath= "\"%ZAPRET_BIN%winws.exe\" !ARG_ESCAPED!" start= "%SERVICE_BOOT_FLAG%"
 
 goto :eof
 
